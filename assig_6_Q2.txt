@@ -1,0 +1,42 @@
+2) Write a query that selects all of the customers serviced by Peel or Motika.
+(Hint: the snum field relates the two tables to one another).
+
+
+
+mysql> select * from customers;
++------+----------+----------+--------+------+-----------+
+| Cnum | Cname    | City     | Rating | Snum | Date_time |
++------+----------+----------+--------+------+-----------+
+| 2002 | Giovanni | Rome     |    200 | 1003 | NULL      |
+| 2003 | Liu      | San Jose |    200 | 1002 | NULL      |
+| 2004 | grass    | Berlin   |    300 | 1002 | NULL      |
+| 2006 | Clemens  | London   |    100 | 1001 | NULL      |
+| 2008 | Cisneros | San Jose |    300 | 1007 | NULL      |
+| 2007 | Pereira  | Rome     |    100 | 1004 | NULL      |
+| 2001 | Hoffman  | London   |    100 | 1001 | NULL      |
++------+----------+----------+--------+------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from salespeople;
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.10 |
+| 1003 | Axeleod | New Yord  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+
+mysql> select customers.cname ,salespeople.snum, salespeople.sname from customers, salespeople
+    -> where salespeople.snum =1004 and customers.snum =1004 or salespeople.snum = 1001 and
+ customers.snum = 1001;
++---------+------+--------+
+| cname   | snum | sname  |
++---------+------+--------+
+| Clemens | 1001 | Peel   |
+| Pereira | 1004 | Motika |
+| Hoffman | 1001 | Peel   |
++---------+------+--------+
